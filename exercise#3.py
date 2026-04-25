@@ -1,31 +1,29 @@
-def get_user():
-    username = input("Enter Username: ")
-    age = int(input("Enter Age: "))
-    return username, age
+def user_info():
+    name = input("Username: ")
+    age = int(input("Age: "))
+    return name, age
 
 
 try:
-    file = open("users.txt", "w")
+    username, age = user_info()
 
-    user, age = get_user()
-    file.write(user + " - " + str(age) + "\n")
-
-    file.close()
+    with open("record.txt", "w") as file:
+        file.write(f"{username} - {age}\n")
 
 except ValueError:
-    print("Invalid input! Age must be a number.")
+    print("Please enter a valid number for age.")
 
-except Exception as e:
-    print("An error occurred:", e)
+except Exception as error:
+    print("Something went wrong:", error)
 
 finally:
-    print("\nSaved Users:\nUsername - Age")
+    print("\nList of Saved User")
+    print("Username - Age")
 
     try:
-        file = open("users.txt", "r")
-        print(file.read())
-        file.close()
+        with open("record.txt", "r") as file:
+            print(file.read())
     except FileNotFoundError:
-        print("No saved users found.")
+        print("File does not exist.")
 
     print("System complete.")
